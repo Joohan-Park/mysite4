@@ -54,7 +54,7 @@
 	<!-- 회원정보수정 -->
 	<update id="update" parameterType="uservo">
 		<![CDATA[
-		update
+		update users
 			set 
 		]]>
 			<if test="password!=null and password!=''">

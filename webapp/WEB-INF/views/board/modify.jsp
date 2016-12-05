@@ -14,9 +14,9 @@
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board">
-					<input type="hidden" name="a" value="modify"/>	
+				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/modify">
 					<input type="hidden" name="no" value="${boardVo.no }" />
+					<input type="hidden" name="p" value="${page }"/>
 					<input type="hidden" name="kwd" value="${keyword }" />
 					<table class="tbl-ex">
 						<tr>

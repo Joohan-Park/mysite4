@@ -15,7 +15,7 @@
 		<div id="content">
 			<div id="board">
 				<form id="search_form" action="${pageContext.request.contextPath }/board" method="get">
-					<input type="text" id="kwd" name="kwd" value="${keyword }">
+					<input type="text" id="kwd" name="kwd" value="${map.keyword }">
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -27,19 +27,19 @@
 						<th>작성일</th>
 						<th>&nbsp;</th>
 					</tr>
-					<c:forEach items="${list }"	var="vo" varStatus="status">			
+					<c:forEach items="${map.list }"	var="vo" varStatus="status">			
 						<tr>
-							<td>${totalCount - (currentPage - 1)*listSize - status.index }</td>
+							<td>${map.totalCount - (map.currentPage - 1)*map.listSize - status.index }</td>
 							<c:choose>
 								<c:when test="${vo.depth > 0 }">
 									<td class="left" style="padding-left:${20*vo.depth }px">
 										<img src="${pageContext.request.contextPath }/assets/images/reply.png">
-										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }&p=${currentPage }&kwd=${keyword }">${vo.title }</a>
+										<a href="${pageContext.request.contextPath }/board/view?no=${vo.no }&p=${map.currentPage }&kwd=${map.keyword }">${vo.title }</a>
 									</td>
 								</c:when>
 								<c:otherwise>
 									<td class="left">
-										<a href="${pageContext.request.contextPath }/board?a=view&no=${vo.no }&p=${currentPage }&kwd=${keyword }">${vo.title }</a>
+										<a href="${pageContext.request.contextPath }/board/view?no=${vo.no }&p=${map.currentPage }&kwd=${map.keyword }">${vo.title }</a>
 									</td>
 								</c:otherwise>
 							</c:choose>
@@ -49,7 +49,7 @@
 							<td>
 								<c:choose>
 									<c:when test="${not empty authUser && authUser.no == vo.userNo }">
-										<a href="${pageContext.request.contextPath }/board?a=delete&no=${vo.no }&p=${currentPage }&kwd=${keyword }" class="del">삭제</a>
+										<a href="${pageContext.request.contextPath }/board/delete?no=${vo.no }&p=${map.currentPage }&kwd=${map.keyword }" class="del">삭제</a>
 									</c:when>
 									<c:otherwise>
 										&nbsp;
@@ -61,32 +61,32 @@
 				</table>
 				<div class="pager">
 					<ul>
-						<c:if test="${prevPage > 0 }" >
-							<li><a href="${pageContext.request.contextPath }/board?p=${prevPage }&kwd=${keyword }">◀</a></li>
+						<c:if test="${map.prevPage > 0 }" >
+							<li><a href="${pageContext.request.contextPath }/board?p=${map.prevPage }&kwd=${map.keyword }">◀</a></li>
 						</c:if>
 						
-						<c:forEach begin="${beginPage }" end="${beginPage + listSize - 1 }" var="page">
+						<c:forEach begin="${map.beginPage }" end="${map.beginPage + map.listSize - 1 }" var="page">
 							<c:choose>
-								<c:when test="${endPage < page }">
+								<c:when test="${map.endPage < page }">
 									<li>${page }</li>
 								</c:when> 
-								<c:when test="${currentPage == page }">
+								<c:when test="${map.currentPage == page }">
 									<li class="selected">${page }</li>
 								</c:when>
 								<c:otherwise> 
-									<li><a href="${pageContext.request.contextPath }/board?p=${page }&kwd=${keyword }">${page }</a></li>
+									<li><a href="${pageContext.request.contextPath }/board?p=${page }&kwd=${map.keyword }">${page }</a></li>
 								</c:otherwise>
 							</c:choose>
 						</c:forEach>
 						
-						<c:if test="${nextPage > 0 }" >
-							<li><a href="${pageContext.request.contextPath }/board?p=${nextPage }&kwd=${keyword }">▶</a></li>
+						<c:if test="${map.nextPage > 0 }" >
+							<li><a href="${pageContext.request.contextPath }/board?p=${map.nextPage }&kwd=${map.keyword }">▶</a></li>
 						</c:if>	
 					</ul>
 				</div>				
 				<div class="bottom">
 					<c:if test="${not empty authUser }">
-						<a href="${pageContext.request.contextPath }/board?a=writeform" id="new-book">글쓰기</a>
+						<a href="${pageContext.request.contextPath }/board/write" id="new-book">글쓰기</a>
 					</c:if>
 				</div>
 			</div>
